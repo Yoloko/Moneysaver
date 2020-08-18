@@ -1,3 +1,5 @@
 module.exports = {
-  Book: require("./book")
+  expense: require("./expense"),
+  savings: require("./savings"),
+  income: require("./income")
 };
