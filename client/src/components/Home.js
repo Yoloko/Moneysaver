@@ -17,8 +17,9 @@ export default class Home extends Component {
     render() {
         return (
             <div>
-                <h1>logged in user ( ..)</h1>
+                <h1>logged in user ({this.state.username})</h1>
                 <button onClick = {this.logout}>Logout</button>
+                
             </div>
         )
     }
