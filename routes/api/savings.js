@@ -1,38 +1,46 @@
 const router = require("express").Router();
-const ExpenseController = require("../../controllers/expenseController");
-const IncomeController = require("../../controllers/incomeController");
-const SavingsController = require("../../controllers/savingsController");
+const db = require("../../models");
 
+//  /api/budget/user/add
+/*
+{
+    "id":1,
+    "savings":{
+        "goal":100,
+        "saved":10,
+        "description": "mysavings"
+    }
+}
+*/
 
-                        /* ********** Expenses Routes ********** */
+router.route("/user/add").post(function(req, resp){
+  db.UserMoney.create({
+    userId:req.body.id,
+    inc_exp: [],
+    savings:req.body.savings
+  }).then (dbModel => resp.json(dbModel))
 
-// router.route("/")
-//   .get(ExpenseController.findAll)
-//   .post(ExpenseController.create);
+})
 
-// Matches with "/api/expense/:id"
-// router
-//   .route("/api/expense/:id")
-//   .get(ExpenseController.findById);
-  // .put(ExpenseController.update)
-  // .post(ExpenseController.create)
-  // .delete(ExpenseController.remove);
+// /api/budget/:id
+router.route("/:id").get (function(req, resp){
+  db.UserMoney
+  .findOne({userId:req.params.id})
+  .then(dbModel => resp.json(dbModel))
+})
 
+// /api/budget/:id/incexp
+/*
+{
+    "amount":20,
+    "description": "payday3"
+}
+*/
+router.route("/:id/incexp").post(function(req, resp){
+  db.UserMoney
+  .findOneAndUpdate({userId:req.params.id},{$push: {inc_exp:req.body}},{returnNewDocument:true})
+  .then(dbModel=>resp.json(dbModel))
 
-                        /* ********** Incomes Routes ********** */
-// router
-// .route(("/api/income/id")
-// .get(IncomeController.findById);
-// .put(IncomeController.update)
-// .post(IncomeController.create)
-// .delete(IncomeController.remove);
-
-                          /* ********** Savings Routes ********** */
-router
-.route("/api/savings/:id")
-.get(SavingsController.findById)
-.put(SavingsController.update)
-.post(SavingsController.create)
-.delete(SavingsController.remove);
+})
 
 module.exports = router;
