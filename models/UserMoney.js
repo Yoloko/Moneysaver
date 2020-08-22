@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-constUserMoney = new Schema({
+const UserMoneySchema = new Schema({
 
     userId: {
         type:String,
@@ -36,7 +36,8 @@ constUserMoney = new Schema({
             default: () => new Date()
         }
     }
-    
-
-
 })
+
+const UserMoney = mongoose.model("UserMoney", UserMoneySchema);
+
+module.exports = UserMoney;

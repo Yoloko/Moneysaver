@@ -99,12 +99,12 @@ db.expense
 
 const savingsSeed = [
   {
-    userId: "fff",
+    userId: "115114",
     savings:{
-      goal: 500000.00,
-      saved: 40000.00,
-      description: "Trip to Hawaii",
-      timestamp: new Date(new Date().setDate(new Date().getDate() - 10))
+      goal: 453453.0,
+      saved: 44.00,
+      description: "Carsland",
+      timestamp: '2020-08-06 15:24:05.539Z'
     }
   },
   {
