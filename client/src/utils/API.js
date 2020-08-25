@@ -1,20 +1,16 @@
-import axios from "axios";
+import axios from 'axios';
+const api =  "https://5ade151bef3fbd0014746da3.mockapi.io"
 
-export default {
-  // Gets all books
-  getBooks: function() {
-    return axios.get("/api/books");
-  },
-  // Gets the book with the given id
-  getBook: function(id) {
-    return axios.get("/api/books/" + id);
-  },
-  // Deletes the book with the given id
-  deleteBook: function(id) {
-    return axios.delete("/api/books/" + id);
-  },
-  // Saves a book to the database
-  saveBook: function(bookData) {
-    return axios.post("/api/books", bookData);
-  }
-};
+export const getAll = () =>
+  axios.get(`${api}/api/v1/records`)
+
+export const create = (body) =>
+  axios.post(`${api}/api/v1/records`, body)
+
+export const update = (id, body) =>
+  axios.put(`${api}/api/v1/records/${id}`, body)
+
+export const remove = (id) =>
+  axios.delete(`${api}/api/v1/records/${id}`)
+
+  

@@ -59,7 +59,7 @@ export default class Login extends Component {
         return (
             <Grid container spacing={3}>
                 <Grid item sm={12}>
-                <Card  variant="outlined" className="card">
+                <Card  variant="outlined" className="card login">
                     <CardContent>
                         <input
                             type="email"
