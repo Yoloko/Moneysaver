@@ -1,16 +1,17 @@
 import axios from 'axios';
-const api =  "https://5ade151bef3fbd0014746da3.mockapi.io"
+// const api =  "https://5ade151bef3fbd0014746da3.mockapi.io"
 
-export const getAll = () =>
-  axios.get(`${api}/api/v1/records`)
+export const createUser = (body) =>
+  axios.post(`/api/budget/user/add`, body)
 
-export const create = (body) =>
-  axios.post(`${api}/api/v1/records`, body)
+export const getUserData = (id) =>
+  axios.get(`/api/budget/${id}`)
 
-export const update = (id, body) =>
-  axios.put(`${api}/api/v1/records/${id}`, body)
+export const addBudgetData = (id,body) =>
+  axios.post(`/api/budget/${id}/incexp`, body)
 
-export const remove = (id) =>
-  axios.delete(`${api}/api/v1/records/${id}`)
+export const updateGoal = (id,body) =>
+  axios.put(`/api/budget/${id}/goal`, body)
 
-  
+  export const deleteBudgetEntry = (userId, entryId) =>
+    axios.delete(`/api/budget/${userId}/incexp/${entryId}`)
