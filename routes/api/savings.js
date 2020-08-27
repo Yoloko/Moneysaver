@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const db = require("../../models");
 
-//  /api/budget/user/add
+
 /*
 {
     "id":1,
@@ -12,7 +12,7 @@ const db = require("../../models");
     }
 }
 */
-
+//  /api/budget/user/add
 router.route("/user/add").post(function(req, resp){
   db.UserMoney.create({
     userId:req.body.id,
@@ -29,18 +29,39 @@ router.route("/:id").get (function(req, resp){
   .then(dbModel => resp.json(dbModel))
 })
 
-// /api/budget/:id/incexp
 /*
 {
     "amount":20,
     "description": "payday3"
 }
 */
+
+// /api/budget/:id/incexp
 router.route("/:id/incexp").post(function(req, resp){
   db.UserMoney
   .findOneAndUpdate({userId:req.params.id},{$push: {inc_exp:req.body}},{returnNewDocument:true})
   .then(dbModel=>resp.json(dbModel))
 
 })
+
+// {
+//   "goal": 1756,
+//   "saved": 10,
+//   "description": "Hawaii"
+// }
+
+// /api/budget/:id/goal
+router.route("/:id/goal").put(function(req, resp){
+  db.UserMoney
+  .findOneAndUpdate({userId:req.params.id},{$set: {savings:req.body}},{returnNewDocument:true})
+  .then(dbModel=>resp.json(req.body))
+});
+
+// /api/budget/:userId/incexp/:entryId
+router.route("/:userId/incexp/:entryId").delete(function(req, resp){
+  db.UserMoney.update({userId:req.params.userId},{$pull: {inc_exp: {_id:req.params.entryId}}})
+  .then(dbModel=>resp.json(`entry with id ${req.params.entryId} deleted`))
+})
+
 
 module.exports = router;
