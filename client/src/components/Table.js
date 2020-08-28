@@ -7,7 +7,7 @@ function Table(props){
             <table className = "table table-bordered">
                 <thead>
                     <tr>
-                        <td>Title</td>
+                        <td>Description</td>
                         <td>Amount</td>
                         <td>Actions</td>
                     </tr>

@@ -3,13 +3,14 @@ import fire from '../config/fire'
 import Form from './Form';
 import Summary from './Summary';
 import Table from './Table';
-import * as API from '../utils/API';
+import API from '../utils/API';
 
 export default class Home extends Component {
     constructor(props){
         super(props)
         this.state={
             email: "",
+            userId: "",
             password: "",
             isLoaded: false,
             error: null,
@@ -23,18 +24,8 @@ export default class Home extends Component {
     }
 
     componentDidMount(){
-        API.getAll()
-        .then(
-            response => this.setState({
-                records: response.data,
-                isLoaded: true
-            })
-        ).catch(
-            error => this.setState({
-                isLoaded: true,
-                error: error
-            })
-        )
+        API.getBudgetData().then(response => {console.log(response)})
+        // console.log(this.state)
     }
 
     addRecord(r){
@@ -105,16 +96,14 @@ export default class Home extends Component {
             TablePlaceholder = <div className="alert alert-primary" role="alert">Loading...</div>;
         }else{
             TablePlaceholder = <Table entries={records}
-                   handleUpdateRecord={this.updateRecord.bind(this)}
-                   handleDeleteRecord={this.deleteRecord.bind(this)}/>;
+                   handleUpdateRecord={this.updateRecord(this)}
+                   handleDeleteRecord={this.deleteRecord(this)}/>;
         }
         return (
             <div>
                 <h1>logged in user ({this.state.username})</h1>
                 <button onClick = {this.logout}>Logout</button>
                 <div className="container">
-               
-
 
                 <h2 style={{textAlign:"center"}}>Quick Save</h2>
 
@@ -126,13 +115,14 @@ export default class Home extends Component {
                     <Summary text="Saved" type="info" amount={this.balance()} />
                 </div>
                 <br />
-                <Form handleAddRecord={this.addRecord.bind(this)}/>
+                <Form handleAddRecord={this.addRecord.bind(this)} user={this.props} />
 
                 <hr />
                 <br />
 
                 {TablePlaceholder}
             </div>
+            <h1>Home</h1>
             </div>
         )
     }

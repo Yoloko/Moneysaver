@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import "./styles/login.css"
+import API from "../utils/API"
 
 const loginButton ={
     backgroundColor: '#1877f2',
@@ -32,7 +33,7 @@ export default class Login extends Component {
     login = (e) => {
         e.preventDefault();
         fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
-            console.log(u);
+            console.log(u.user.uid);
 
         }).catch((err) => {
             console.log(err)
@@ -43,8 +44,11 @@ export default class Login extends Component {
         e.preventDefault();
 
         fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
-            console.log(u);
-
+            console.log(u.user.uid);
+            API.createUser( {
+                id: u.user.uid,
+                savings:{}
+            })
         }).catch((err) => {
             console.log(err)
         })
@@ -90,29 +94,3 @@ export default class Login extends Component {
         )
     }
 }
-
-
-
-
-
-{/* <Card className={classes.root} variant="outlined">
-      <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Word of the Day
-        </Typography>
-        <Typography variant="h5" component="h2">
-          be{bull}nev{bull}o{bull}lent
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          adjective
-        </Typography>
-        <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card> */}

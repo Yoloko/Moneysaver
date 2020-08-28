@@ -7,7 +7,6 @@ import fire from './config/fire'
 import Home from './components/Home'
 import Login from './components/Login'
 
-
 export default class App extends Component {
   constructor(props){
     super(props);
@@ -33,7 +32,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        {this.state.user ? <Home/> : <Login/>}
+        {this.state.user ? <Home user={this.state.user}/> : <Login/>}
       </div>
     )
   }
@@ -41,17 +40,14 @@ export default class App extends Component {
 
 
 
-// function App() {
+// export default function App() {
 //   return (
 //     <Router>
 //       <div>
-//         <Nav />
+//         {/* <Nav /> */}
 //         <Switch>
-//           <Route exact path={["/", "/books"]}>
-//             <Page />
-//           </Route>
-//           <Route>
-//             <NoMatch />
+//           <Route exact path={["/", "/savings"]}>
+//             <Home />
 //           </Route>
 //         </Switch>
 //       </div>

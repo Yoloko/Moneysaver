@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import * as API from '../utils/API';
+import API from '../utils/API';
 
 
 class TableRow extends Component{
@@ -23,7 +23,7 @@ class TableRow extends Component{
           title: this.refs.title.value,
           amount: Number.parseInt(this.refs.amount.value, 0)
         }
-        API.update(this.props.entry.id, newEntry)
+        API.updateGoal(this.props.entry.id, newEntry)
         .then(
             response =>{
                 const oldNew = {"old": this.props.entry, "new": response.data};
@@ -37,7 +37,7 @@ class TableRow extends Component{
 
     handleDelete(event){
         event.preventDefault(event);
-        API.remove(this.props.entry.id)
+        API.deleteBudgetEntry(this.props.entry.id)
         .then(
             response => {
                 this.props.handleDeleteRecord(this.props.entry);
