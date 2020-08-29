@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Page from "./pages/Page";
-import NoMatch from "./pages/NoMatch";
-import Nav from "./components/Nav";
+import Page from "../pages/Page";
+import NoMatch from "../pages/NoMatch";
+import Nav from "./Nav";
 import React, { Component } from 'react'
-import fire from './config/fire'
-import Home from './components/Home'
-import Login from './components/Login'
+import fire from '../config/fire'
+import Home from './Home'
+import Login from './Login'
 
 export default class App extends Component {
   constructor(props){
@@ -26,17 +26,58 @@ export default class App extends Component {
         }else{
           this.setState({user: null})
         }
+        // console.log(this.state.user.uid)
       })
     }
   
   render() {
     return (
       <div>
-        {this.state.user ? <Home user={this.state.user}/> : <Login/>}
+        {this.state.user ? <Home userId={this.state.user.uid}/> : <Login/>}
       </div>
     )
   }
 }
+
+// export const AuthProvider = ({ children }: any) => {
+// useEffect(() => {
+//   firebase.auth().onAuthStateChanged((user: any) => {
+//     setUser(user);
+//     setLoadingAuthState(false);
+//  });
+// }, []);
+// return (
+//   <AuthContext.Provider
+//    value={{
+//         user,
+//         authenticated: user !== null,
+//         setUser,
+//         loadingAuthState
+//   }}>
+//     {children} 
+//  </AuthContext.Provider>
+// );
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

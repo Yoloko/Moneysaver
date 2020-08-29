@@ -3,6 +3,7 @@ import fire from '../config/fire'
 import Form from './Form';
 import Summary from './Summary';
 import Table from './Table';
+import IncExpTable from './IncExpTable'
 import API from '../utils/API';
 
 export default class Home extends Component {
@@ -14,7 +15,12 @@ export default class Home extends Component {
             password: "",
             isLoaded: false,
             error: null,
-            records:[]
+            records:[],
+            inc_exp:[],
+            savings: {},
+            userId:""
+
+
         }
     }
     logout = (e) =>{
@@ -24,8 +30,27 @@ export default class Home extends Component {
     }
 
     componentDidMount(){
-        API.getBudgetData().then(response => {console.log(response)})
-        // console.log(this.state)
+        if(!this.props.userId){
+            console.log("Loading")
+        }
+        else{
+           this.state.userId  = this.props.userId
+         console.log(this.state.userId)
+         
+         API.getBudgetData('WyK5o0j7z9TrwzaAKMio1moacaZ2').then(response => {
+            console.log(response);
+
+            this.setState({
+                inc_exp: response.data.inc_exp,
+                savings: response.data.savings
+            })
+
+        })
+        }
+
+      
+        
+       
     }
 
     addRecord(r){
@@ -88,6 +113,7 @@ export default class Home extends Component {
 
 
     render() {
+     
         const { isLoaded, error, records } = this.state;
         let TablePlaceholder;
         if(error){
@@ -101,7 +127,8 @@ export default class Home extends Component {
         }
         return (
             <div>
-                <h1>logged in user ({this.state.username})</h1>
+                {/* {console.log(this.state)} */}
+                {/* <h1>logged in user ({this.state.username})</h1> */}
                 <button onClick = {this.logout}>Logout</button>
                 <div className="container">
 
@@ -120,9 +147,10 @@ export default class Home extends Component {
                 <hr />
                 <br />
 
-                {TablePlaceholder}
+                <IncExpTable
+                    inc_exp={this.state.inc_exp}
+                />
             </div>
-            <h1>Home</h1>
             </div>
         )
     }
