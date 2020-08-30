@@ -28,7 +28,7 @@ export default function Goal(props) {
     <Card className={classes.root}>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {`Goal : ${'no slack in my mack'}`}
+            {`Goal : ${''}`}
           </Typography>
           <Typography gutterBottom variant="h5" component="h2">
           </Typography>
