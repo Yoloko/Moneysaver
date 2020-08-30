@@ -19,7 +19,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CreateIcon from '@material-ui/icons/Create';
 import FilterListIcon from '@material-ui/icons/FilterList';
+
+import Button from '@material-ui/core/Button';
 
 const headCells = [
     { id: 'description', numeric: false, disablePadding: true, label: 'Description' },
@@ -37,7 +40,12 @@ function EnhancedTableHead(props) {
         <TableHead>
             <TableRow>
                 <TableCell padding="checkbox">
-                    
+                <Checkbox
+                    indeterminate={numSelected > 0 && numSelected < rowCount}
+                    checked={rowCount > 0 && numSelected === rowCount}
+                    onChange={onSelectAllClick}
+                    inputProps={{ 'aria-label': 'select all desserts' }}
+                /> 
                 </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
@@ -116,15 +124,32 @@ const EnhancedTableToolbar = (props) => {
                 )}
 
             {numSelected > 0 ? (
+                <>
                 <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={<DeleteIcon />}
+                >
+                    Delete
+                </Button>
                 </Tooltip>
+                <Tooltip title="Update">
+                <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    startIcon={<CreateIcon />}
+                >
+                    Update
+                </Button>
+                </Tooltip>
+                    </>
             ) : (
                     <Tooltip title="Filter list">
                         <IconButton aria-label="filter list">
-                            <FilterListIcon />
+                            {/* <FilterListIcon /> */}
                         </IconButton>
                     </Tooltip>
                 )}
@@ -206,6 +231,23 @@ export default function IncExpTable(props) {
         setSelected([]);
     };
     const handleClick = (event, name) => {
+        const selectedIndex = selected.indexOf(name);
+        let newSelected = [];
+    
+        if (selectedIndex === -1) {
+          newSelected = newSelected.concat(selected, name);
+        } else if (selectedIndex === 0) {
+          newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+          newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+          newSelected = newSelected.concat(
+            selected.slice(0, selectedIndex),
+            selected.slice(selectedIndex + 1),
+          );
+        }
+    
+        setSelected(newSelected);
         
     };
 
@@ -239,6 +281,8 @@ export default function IncExpTable(props) {
                 props.inc_exp.length > 0 ? <h1>rows not empty</h1>  :<h1>rows empty</h1>
             } */}
             <Paper className={classes.paper}>
+                
+        <EnhancedTableToolbar numSelected={selected.length} />
                 <TableContainer>
                     <Table
                         className={classes.table}
@@ -258,19 +302,26 @@ export default function IncExpTable(props) {
                         <TableBody>
                             {
                                 props.inc_exp.map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
+                                    const isItemSelected = isSelected(row._id);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.name)}
+                                            onClick={(event) => handleClick(event, row._id)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
-                                            key={row.name}
+                                            key={row._id}
                                             selected={isItemSelected}
+                                            style = { row.amount < 0 ? {backgroundColor: 'red'} : {backgroundColor: 'green'}}
                                         >
+                                            <TableCell padding="checkbox">
+                                                <Checkbox
+                                                checked={isItemSelected}
+                                                inputProps={{ 'aria-labelledby': labelId }}
+                                                />
+                                            </TableCell>
                                             <TableCell component="th" id={labelId} scope="row" padding="none">
                                                 {row.timestamp}
                                             </TableCell>
