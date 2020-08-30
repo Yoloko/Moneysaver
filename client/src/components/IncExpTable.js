@@ -21,6 +21,7 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CreateIcon from '@material-ui/icons/Create';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import UpdateDialog from './UpdateDialog'
 
 import Button from '@material-ui/core/Button';
 
@@ -133,16 +134,6 @@ const EnhancedTableToolbar = (props) => {
                     startIcon={<DeleteIcon />}
                 >
                     Delete
-                </Button>
-                </Tooltip>
-                <Tooltip title="Update">
-                <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    startIcon={<CreateIcon />}
-                >
-                    Update
                 </Button>
                 </Tooltip>
                     </>
@@ -260,7 +251,7 @@ export default function IncExpTable(props) {
         setDense(event.target.checked);
     };
 
-    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const isSelected = (id) => selected.indexOf(id) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -336,6 +327,7 @@ export default function IncExpTable(props) {
                     </Table>
                 </TableContainer>
             </Paper>
+            
         </div>
     );
 }
