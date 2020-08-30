@@ -30,14 +30,16 @@ export default class Home extends Component {
     }
 
     componentDidMount(){
-        if(!this.props.userId){
-            console.log("Loading")
+        let userId;
+        try{
+           userId = this.props;
+        console.log(userId)
+
+        }catch (error){
+            console.log(error);
         }
-        else{
-           this.state.userId  = this.props.userId
-         console.log(this.state.userId)
-         
-         API.getBudgetData('WyK5o0j7z9TrwzaAKMio1moacaZ2').then(response => {
+
+        API.getBudgetData('WyK5o0j7z9TrwzaAKMio1moacaZ2').then(response => {
             console.log(response);
 
             this.setState({
@@ -46,9 +48,7 @@ export default class Home extends Component {
             })
 
         })
-        }
 
-      
         
        
     }
@@ -113,7 +113,6 @@ export default class Home extends Component {
 
 
     render() {
-     
         const { isLoaded, error, records } = this.state;
         let TablePlaceholder;
         if(error){

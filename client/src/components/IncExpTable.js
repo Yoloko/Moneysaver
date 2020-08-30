@@ -27,6 +27,34 @@ const headCells = [
     { id: 'timestamp', numeric: true, disablePadding: false, label: 'Timestamp' },
 ];
 
+
+function descendingComparator(a, b, orderBy) {
+    if (b[orderBy] < a[orderBy]) {
+        return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+        return 1;
+    }
+    return 0;
+}
+
+function getComparator(order, orderBy) {
+    return order === 'desc'
+        ? (a, b) => descendingComparator(a, b, orderBy)
+        : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function stableSort(array, comparator) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+        const order = comparator(a[0], b[0]);
+        if (order !== 0) return order;
+        return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
+}
+
+
 function EnhancedTableHead(props) {
     const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
     const createSortHandler = (property) => (event) => {
@@ -176,51 +204,17 @@ export default function IncExpTable(props) {
     ];
     useEffect(x => {
         tableData(props);
-        // console.log(props.inc_exp);
     })
 
-    //   function foo(props){
-    //       let h = props
-    //   }
+    
 
     function tableData(props) {
+        let foo = props;
         props.inc_exp.forEach(data => {
             rows.push(createData(data.timeStamp, data._id, data.description, data.amount));
-            console.log(data)
-        })
-    }
-    // create function to map hte inc_exp array in props and callcreatedata to display data on the table 
-    // how will ^^ fire?? useref?? make comonent class and do after did mount?
-
-
-
-    function descendingComparator(a, b, orderBy) {
-        if (b[orderBy] < a[orderBy]) {
-            return -1;
-        }
-        if (b[orderBy] > a[orderBy]) {
-            return 1;
-        }
-        return 0;
-    }
-
-    function getComparator(order, orderBy) {
-        return order === 'desc'
-            ? (a, b) => descendingComparator(a, b, orderBy)
-            : (a, b) => -descendingComparator(a, b, orderBy);
-    }
-
-    function stableSort(array, comparator) {
-        const stabilizedThis = array.map((el, index) => [el, index]);
-        stabilizedThis.sort((a, b) => {
-            const order = comparator(a[0], b[0]);
-            if (order !== 0) return order;
-            return a[1] - b[1];
+            
         });
-        return stabilizedThis.map((el) => el[0]);
     }
-
-
 
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -308,6 +302,7 @@ export default function IncExpTable(props) {
                             {stableSort(rows, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
+                                    alert('clearj')
                                     const isItemSelected = isSelected(row.name);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -333,7 +328,6 @@ export default function IncExpTable(props) {
                                             <TableCell align="right">{row._id}</TableCell>
                                             <TableCell align="right">{row.description}</TableCell>
                                             <TableCell align="right">{row.amount}</TableCell>
-                                            <TableCell align="right">{row.protein}</TableCell>
                                         </TableRow>
                                     );
                                 })}

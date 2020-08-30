@@ -33,7 +33,8 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        {this.state.user ? <Home userId={this.state.user.uid}/> : <Login/>}
+        {this.state.user ? <Home userId={this.state.user}/> : <Login/>}
+        {console.log(this.state.user)}
       </div>
     )
   }
