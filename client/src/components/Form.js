@@ -23,12 +23,13 @@ class Form extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        const entry = {
-            description: this.state.description,
-            amount: this.state.amount
-        }
+        // const entry = {
+        //     description: event.target.description,
+        //     amount: event.target.amount
+        // }
+        alert(event.target.value);
 
-        API.addBudgetData(this.props.user.user.uid, entry).then(x => console.log(x));
+        // API.addBudgetData(this.props.user.user.uid, entry).then(x => console.log(x));
 
     };
 
@@ -50,8 +51,6 @@ class Form extends Component {
     }
 
     render() {
-        console.log(this.props.user.user.uid)
-
         return (
             <form className="form mb-3 text-center" onSubmit={this.handleSubmit.bind(this)}>
 

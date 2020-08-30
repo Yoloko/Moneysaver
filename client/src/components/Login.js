@@ -33,7 +33,7 @@ export default class Login extends Component {
     login = (e) => {
         e.preventDefault();
         fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
-            console.log(u.user.uid);
+            // console.log(u.user.uid);
 
         }).catch((err) => {
             console.log(err)
