@@ -1,71 +1,82 @@
-import React, { Component } from 'react';
 import API from '../utils/API';
+import React from 'react';
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
+import FilledInput from '@material-ui/core/FilledInput';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import Button from '@material-ui/core/Button';
 
-class Form extends Component {
+const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    margin: {
+      margin: theme.spacing(1),
+    },
+    withoutLabel: {
+      marginTop: theme.spacing(3),
+    },
+    textField: {
+      width: '25ch',
+    },
+  }));
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            description: "",
-            amount: ""
+export default function Form() {
+
+    const classes = useStyles();    
+    const [values, setValues] = React.useState({
+        amount: '',
+        description: '',
+        weight: '',
+      }); 
+
+
+    const submitForm = () => {
+        // alert(`${values.amount} + ${values.description}`)
+        let body = {
+            "amount":parseInt(values.amount),
+            "description":values.description
         }
+        API.addBudgetData('WyK5o0j7z9TrwzaAKMio1moacaZ2',body);
+        window.location.reload();
     }
 
-    handleChange = (event) =>{
-        const name = event.target.name;
-        const value = event.target.value;
-        let obj = {}
-        obj["" + name] = value;
 
-        this.setState((obj));
-    }
 
-    handleSubmit = (event) => {
-        event.preventDefault();
+    return (
 
-        // const entry = {
-        //     description: event.target.description,
-        //     amount: event.target.amount
-        // }
-        alert(event.target.value);
+        
+        <FormControl fullWidth className={classes.margin}>
+        <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
+        <Input
+          id="standard-adornment-amount"
+          value={values.amount}
+          onChange={(event) => setValues({...values, amount: event.target.value})}
+          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+          name="amount"
+        />
+        <InputLabel htmlFor="standard-adornment-amount"></InputLabel>
+        <Input
+          id="standard-adornment-amount"
+          value={values.description}
+          onChange={(event) => setValues({...values, description: event.target.value})}
+          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+          name="description"
+        />
 
-        // API.addBudgetData(this.props.user.user.uid, entry).then(x => console.log(x));
-
-    };
-
-    // API.createUser(entry)
-    // .then(
-    //     response => {
-    //         this.props.handleAddRecord(response.data);
-    //         this.setState({
-    //             description: "",
-    //             amount: ""
-    //         });
-    //     }
-    // ).catch(
-    //     error => console.log(error.message)
-    // )
-
-    valid = () => {
-        return this.state.description && this.state.amount;
-    }
-
-    render() {
-        return (
-            <form className="form mb-3 text-center" onSubmit={this.handleSubmit.bind(this)}>
-
-                <div className="form-group mr-1">
-                    <input type="text" className="form-control" onChange={this.handleChange.bind(this)} placeholder="Enter Text" name="description" value={this.state.description} />
-                </div>
-
-                <div className="form-group mr-1">
-                    <input type="text" className="form-control" onChange={this.handleChange.bind(this)} placeholder="Amount" name="amount" value={this.state.amount} />
-                </div>
-                <button type="submit" className="btn btn-primary" disabled={!this.valid()}> Add Transaction</button>
-            </form>
-        );
-    }
+        <Button onClick={submitForm}variant="contained" color="primary" disableElevation style={{marginTop: "20px"}}>
+            Make Transaction
+        </Button>
+      </FormControl>
+    )
 }
-
-
-export default Form;
