@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useContext, useState, useEffect  } from 'react'
 import fire from '../config/fire'
 import Form from './Form';
 import Summary from './Summary';
@@ -14,73 +14,60 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import Paper from '@material-ui/core/Paper';
-
-export default class Home extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            email: "",
-            userId: "",
-            password: "",
-            isLoaded: false,
-            error: null,
-            records: [],
-            inc_exp: [],
-            savings: {},
-            userId: ""
+import UserContext from './UserContext'
 
 
-        }
-    }
-    logout = (e) => {
+
+export default function Home() {
+
+    const [user, setUser] = React.useState({
+        inc_exp: [],
+        savings: {},
+        userId: ""
+    });
+
+    const authUser = useContext(UserContext);
+
+
+
+    const logout = (e) => {
         e.preventDefault();
         fire.auth().signOut();
-
     }
 
-    componentDidMount() {
-        let userId;
-        try {
-            userId = this.props;
-            console.log(userId)
+    useEffect(() => {
+        const id = authUser ? authUser.uid : "";
+        API.getBudgetData(id).then(response => {
 
-        } catch (error) {
-            console.log(error);
-        }
-
-        API.getBudgetData('WyK5o0j7z9TrwzaAKMio1moacaZ2').then(response => {
-            console.log(response);
-
-            this.setState({
-                inc_exp: response.data.inc_exp,
-                savings: response.data.savings
-            })
-
+            if(! response.data){ console.log("error")}else{ 
+                setUser({inc_exp: response.data.inc_exp,
+                    savings: response.data.savings
+                })
+            }
+            
         })
+    });
 
 
-
-    }
-
-    addRecord(r) {
-        let newRecords = [...this.state.records, r];
-        this.setState({
+    const addRecord = (r) =>  {
+        let newRecords = [...user.records, r];
+        setUser({
             records: newRecords
         });
     }
 
-    deleteRecord(r) {
-        const recordIndex = this.state.records.indexOf(r);
-        const newRecords = this.state.records.filter((record, index) => index !== recordIndex);
+    const deleteRecord = (r) => {
+        const recordIndex = user.records.indexOf(r);
+        const newRecords = user.records.filter((record, index) => index !== recordIndex);
 
-        this.setState({
+        setUser({
             records: newRecords
         });
     }
 
-    updateRecord(oldNew) {
-        const recordIndex = this.state.records.indexOf(oldNew.old);
-        let newRecords = this.state.records.map(
+    const updateRecord = (oldNew) => {
+        const recordIndex = user.records.indexOf(oldNew.old);
+        let newRecords = user.records.map(
             (record, index) => {
                 if (index === recordIndex) {
                     return oldNew.new;
@@ -90,14 +77,14 @@ export default class Home extends Component {
             }
         );
 
-        this.setState({
+        setUser({
             records: newRecords
         });
     }
 
-    credits() {
+    const credits = () => {
 
-        let inc_exp = this.state.inc_exp;
+        let inc_exp = user.inc_exp;
 
         let totalIncome = inc_exp.reduce((preVal, curItem) => {
             if (curItem.amount > 0) {
@@ -110,9 +97,9 @@ export default class Home extends Component {
         return totalIncome;
     }
 
-    debits() {
+    const debits = () => {
 
-        let inc_exp = this.state.inc_exp;
+        let inc_exp = user.inc_exp;
 
         return inc_exp.reduce((preVal, curItem) => {
             if (curItem.amount < 0) {
@@ -123,13 +110,17 @@ export default class Home extends Component {
         }, 0);
     }
 
-    balance() {
-        return this.credits() + this.debits();
+    const balance = () => {
+        return credits() + debits();
+    }
+
+    const log = () =>{
+        console.log(authUser);
     }
 
 
-    render() {
-        const { isLoaded, error, records } = this.state;
+    const render = () => {
+        const { isLoaded, error, records } = user;
         let TablePlaceholder;
         if (error) {
             TablePlaceholder = <div className="alert alert-danger" role="alert"> Error: {error.message} </div>;
@@ -140,11 +131,13 @@ export default class Home extends Component {
                 handleUpdateRecord={this.updateRecord(this)}
                 handleDeleteRecord={this.deleteRecord(this)} />;
         }
-        return (
+    }
+
+
+
+        return(
             <div>
-                {/* {console.log(this.state)} */}
-                {/* <h1>logged in user ({this.state.username})</h1> */}
-                <button onClick={this.logout}>Logout</button>
+                <button onClick={logout}>Logout</button>
                 <div className="container">
 
                     <h2 style={{ textAlign: "center" }}>Quick Save</h2>
@@ -152,13 +145,11 @@ export default class Home extends Component {
                     <br />
 
                     <div className="row mb-3">
-                        <Summary text="Income" type="success" amount={`$ ${this.credits()}`} />
-                        <Summary text="Expenses" type="danger" amount={`$ ${this.debits()}`} />
-                        <Summary text="Saved" type="info" amount={`$ ${this.balance()}`} />
+                        <Summary text="Income" type="success" amount={`$ ${credits()}`} />
+                        <Summary text="Expenses" type="danger" amount={`$ ${debits()}`} />
+                        <Summary text="Saved" type="info" amount={`$ ${balance()}`} />
                     </div>
                     <br />
-
-
 
                     <Grid container spacing={2}>
                         <Grid item md={6}>
@@ -181,10 +172,9 @@ export default class Home extends Component {
                     <br />
 
                     <IncExpTable
-                        inc_exp={this.state.inc_exp}
+                        inc_exp={user.inc_exp}
                     />
                 </div>
             </div>
-        )
-    }
+        );
 }
