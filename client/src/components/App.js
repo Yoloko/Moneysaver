@@ -7,7 +7,7 @@ import fire from '../config/fire'
 import Home from './Home'
 import Login from './Login'
 import UserContext from './UserContext'
-import Background from './Background'
+import Background from './BackgroundCircles'
 
 
 export default class App extends Component {
