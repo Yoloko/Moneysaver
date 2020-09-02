@@ -2,11 +2,12 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Page from "../pages/Page";
 import NoMatch from "../pages/NoMatch";
 import Nav from "./Nav";
-import React, { Component , useContext } from 'react'
+import React, { Component, useContext } from 'react'
 import fire from '../config/fire'
 import Home from './Home'
 import Login from './Login'
 import UserContext from './UserContext'
+import Background from './BackgroundCircles'
 
 
 export default class App extends Component {
@@ -33,12 +34,24 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <UserContext.Provider value ={this.state.user}>
-        {this.state.user ? <Home /> : <Login />}
+      <div >
+        <UserContext.Provider value={this.state.user}>
+          {this.state.user ? <Home /> : <Login />}
           {/* {console.log(this.state.user)} */}
-          </UserContext.Provider>
+        </UserContext.Provider>
       </div>
     )
   }
+
+  
+  // render() {
+  //   return (
+  //     <Background>
+  //       <UserContext.Provider value={this.state.user}>
+  //         {this.state.user ? <Home /> : <Login />}
+  //         {/* {console.log(this.state.user)} */}
+  //       </UserContext.Provider>
+  //     </Background>
+  //   )
+  // }
 }

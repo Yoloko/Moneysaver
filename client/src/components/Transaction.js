@@ -9,6 +9,8 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Form from './Form';
+import CardHeader from '@material-ui/core/CardHeader';
+
 
 const useStyles = makeStyles({
   root: {
@@ -23,11 +25,13 @@ export default function Transaction(props) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} style={{backgroundColor: "yellow"}}>
         <CardContent>
+          <CardHeader title="Make Transaction">
           <Typography gutterBottom variant="h5" component="h2">
-            Make Transaction
+            
           </Typography>
+          </CardHeader>
           <Divider />
           <Form 
             userId = {props.userId}

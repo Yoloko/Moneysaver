@@ -1,4 +1,4 @@
-import React, { Component, useContext, useState, useEffect  } from 'react'
+import React, { Component, useContext, useState, useEffect } from 'react'
 import fire from '../config/fire'
 import Form from './Form';
 import Summary from './Summary';
@@ -16,6 +16,10 @@ import Radio from '@material-ui/core/Radio';
 import Paper from '@material-ui/core/Paper';
 import UserContext from './UserContext'
 import GoalForm from './GoalForm'
+import BackgroundCircles from './BackgroundCircles'
+import Button from '@material-ui/core/Button';
+import './styles/style.css'
+
 
 
 
@@ -32,12 +36,16 @@ export default function Home() {
     const logout = (e) => {
         e.preventDefault();
         fire.auth().signOut();
+        // alert();
+    }
+    const test = () =>{
+        alert("cleared")
     }
 
     useEffect(() => {
         const id = authUser ? authUser.uid : "";
         API.getBudgetData(id).then(response => {
-            if(! response.data){ console.log("error")}else{ 
+            if (!response.data) { console.log("error") } else {
                 setUser({
                     inc_exp: response.data.inc_exp,
                     savings: response.data.savings,
@@ -79,66 +87,74 @@ export default function Home() {
         return credits() + debits();
     }
 
-    // const log = () =>{
-    //     console.log(user.userId);
-    // }
 
 
-        return(
-            <div>
-                <button onClick={logout}>Logout</button>
-                <div className="container">
+    return (
+        // <Background>
+        // <div style={{backgroundColor: "red"}}>
+        <div className="area" >
+            <BackgroundCircles />
+            <Button onClick={logout}> Logout</Button>
+            <div className="container">
 
-                    <h2 style={{ textAlign: "center" }}>Quick Save</h2>
+                <h2 style={{ textAlign: "center" }}>Quick Save</h2>
 
-                    <br />
+                <br />
 
-                    <div className="row mb-3">
-                        <Summary text="Income" type="success" amount={`$ ${credits()}`} />
-                        <Summary text="Expenses" type="danger" amount={`$ ${debits()}`} />
-                        <Summary text="Saved" type="info" amount={`$ ${balance()}`} />
-                    </div>
-                    <br />
-
+                <div className="row mb-3">
                     <Grid container spacing={2}>
                         <Grid item md={4}>
-                            <Grid>
-                                <Grid item>
-                                    <Transaction 
-                                    userId = {user.userId}/>
-                                </Grid>
-                            </Grid>
+                            <Summary text="Income" type="success" amount={`$ ${credits()}`} />
                         </Grid>
                         <Grid item md={4}>
-                            <Grid>
-                                <Grid item>
-                                <GoalProgress 
-                                        saved = {balance()}
-                                        savings = {user.savings}
-                                    />
-                                </Grid>
-                            </Grid>
+                            <Summary text="Expenses" type="danger" amount={`$ ${debits()}`} />
                         </Grid>
                         <Grid item md={4}>
-                            <Grid>
-                                <Grid item>
-                                    <GoalForm 
-                                        goal = {user.savings}
-                                        balance = {balance()}
-                                        userId = {user.userId}
-                                    />
-                                </Grid>
+                            <Summary text="Saved" type="info" amount={`$ ${balance()}`} />
+                        </Grid>
+                    </Grid>
+                </div>
+                <br />
+
+                <Grid container spacing={2}>
+                    <Grid item md={4}>
+                        <Grid>
+                            <Grid item>
+                                <Transaction
+                                    userId={user.userId} />
                             </Grid>
                         </Grid>
                     </Grid>
+                    <Grid item md={4}>
+                        <Grid>
+                            <Grid item>
+                                <GoalProgress
+                                    saved={balance()}
+                                    savings={user.savings}
+                                />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item md={4}>
+                        <Grid>
+                            <Grid item>
+                                <GoalForm
+                                    goal={user.savings}
+                                    balance={balance()}
+                                    userId={user.userId}
+                                />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
 
-                    <hr />
-                    <br />
+                <hr />
+                <br />
 
-                    <IncExpTable
-                        inc_exp={user.inc_exp}
-                    />
-                </div>
+                <IncExpTable
+                    inc_exp={user.inc_exp}
+                />
             </div>
-        );
+        </div>
+    );
 }
