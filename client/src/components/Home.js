@@ -16,6 +16,9 @@ import Radio from '@material-ui/core/Radio';
 import Paper from '@material-ui/core/Paper';
 import UserContext from './UserContext'
 import GoalForm from './GoalForm'
+import Background from './Background'
+import './styles/style.css'
+
 
 
 
@@ -79,13 +82,27 @@ export default function Home() {
         return credits() + debits();
     }
 
-    // const log = () =>{
-    //     console.log(user.userId);
-    // }
 
 
         return(
-            <div>
+            // <Background>
+            <div style={{backgroundColor: "red"}}>
+
+<div className="area" >
+            <ul className="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+            </ul>
+    </div >
+
                 <button onClick={logout}>Logout</button>
                 <div className="container">
 
