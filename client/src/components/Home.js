@@ -5,7 +5,7 @@ import Summary from './Summary';
 import Table from './Table';
 import IncExpTable from './IncExpTable'
 import Transaction from './Transaction'
-import Goal from './Goal'
+import GoalProgress from './GoalProgress'
 import API from '../utils/API';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -15,6 +15,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import Paper from '@material-ui/core/Paper';
 import UserContext from './UserContext'
+import GoalForm from './GoalForm'
 
 
 
@@ -150,17 +151,30 @@ export default function Home() {
                     <br />
 
                     <Grid container spacing={2}>
-                        <Grid item md={6}>
+                        <Grid item md={4}>
                             <Grid>
                                 <Grid item>
                                     <Transaction />
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Grid item md={6}>
+                        <Grid item md={4}>
                             <Grid>
                                 <Grid item>
-                                    <Goal />
+                                <GoalProgress 
+                                        saved = {balance()}
+                                        savings = {user.savings}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item md={4}>
+                            <Grid>
+                                <Grid item>
+                                    <GoalForm 
+                                        goal = {user.savings}
+                                        balance = {balance()}
+                                    />
                                 </Grid>
                             </Grid>
                         </Grid>

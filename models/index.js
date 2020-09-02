@@ -1,3 +1,3 @@
 module.exports = {
-  UserMoney: require("./UserMoney")
+  moneysaver: require("./moneysaver")
 };

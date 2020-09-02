@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const UserMoneySchema = new Schema({
+const moneysaverSchema = new Schema({
 
     userId: {
         type:String,
@@ -38,6 +38,6 @@ const UserMoneySchema = new Schema({
     }
 })
 
-const UserMoney = mongoose.model("UserMoney", UserMoneySchema);
+const MoneySaver = mongoose.model("moneysaver", moneysaverSchema);
 
-module.exports = UserMoney;
+module.exports = MoneySaver;
