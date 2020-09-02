@@ -36,11 +36,10 @@ export default function GoalForm(props) {
         "saved":props.balance,
         "description":values.description
     }
-    API.updateGoal('WyK5o0j7z9TrwzaAKMio1moacaZ2',body);
+    API.updateGoal(props.userId,body);
     setTimeout(function(){
       window.location.reload();
    }, 200)
-// console.log(props.goal)
 }
 
   return (
@@ -56,14 +55,14 @@ export default function GoalForm(props) {
           <TextField
           id="standard-textarea"
           label={`${props.goal.description}`}
-          placeholder="Edit Description"
+          placeholder="New Description"
           onChange={(event) => setValues({...values, description: event.target.value})}
           multiline
         />
         <TextField
           id="standard-textarea"
           label={`$ ${props.goal.goal}`}
-          placeholder="Edit Amount"
+          placeholder="New Amount"
           onChange={(event) => setValues({...values, amount: event.target.value})}
           multiline
         />

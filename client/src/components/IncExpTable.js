@@ -22,7 +22,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CreateIcon from '@material-ui/icons/Create';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import UpdateDialog from './UpdateDialog'
-
+import API from '../utils/API';
 import Button from '@material-ui/core/Button';
 
 const headCells = [
@@ -108,6 +108,11 @@ const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
     const { numSelected } = props;
 
+     const remove = (selected) => {
+        // alert(selected)
+        API.deleteBudgetEntry('WyK5o0j7z9TrwzaAKMio1moacaZ2',selected);
+    }
+
     return (
         <Toolbar
             className={clsx(classes.root, {
@@ -132,6 +137,8 @@ const EnhancedTableToolbar = (props) => {
                     color="secondary"
                     className={classes.button}
                     startIcon={<DeleteIcon />}
+                    onClick={() =>remove(props.selected)}
+
                 >
                     Delete
                 </Button>
@@ -273,7 +280,7 @@ export default function IncExpTable(props) {
             } */}
             <Paper className={classes.paper}>
                 
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length}  selected={selected}/>
                 <TableContainer>
                     <Table
                         className={classes.table}

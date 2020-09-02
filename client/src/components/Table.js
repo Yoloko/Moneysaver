@@ -6,17 +6,17 @@ function Table(props){
     return (
             <table className = "table table-bordered">
                 <thead>
-                    <tr>
+                    {/* <tr>
                         <td>Description</td>
                         <td>Amount</td>
                         <td>Actions</td>
-                    </tr>
+                    </tr> */}
                 </thead>
-                <tbody>
+                {/* <tbody>
                     { props.entries.map((entry) => <TableRow key={entry.id} entry={entry}
                                                                    handleUpdateRecord = {props.handleUpdateRecord}
                                                                    handleDeleteRecord = {props.handleDeleteRecord}/>)}
-                </tbody>
+                </tbody> */}
             </table>
         );
 }

@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Transaction() {
+export default function Transaction(props) {
   const classes = useStyles();
 
   return (
@@ -29,7 +29,9 @@ export default function Transaction() {
             Make Transaction
           </Typography>
           <Divider />
-          <Form />
+          <Form 
+            userId = {props.userId}
+            />
         </CardContent>
     </Card>
   );
