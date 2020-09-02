@@ -38,13 +38,11 @@ export default function Home() {
     useEffect(() => {
         const id = authUser ? authUser.uid : "";
         API.getBudgetData(id).then(response => {
-
             if(! response.data){ console.log("error")}else{ 
                 setUser({inc_exp: response.data.inc_exp,
                     savings: response.data.savings
                 })
             }
-            
         })
     });
 
