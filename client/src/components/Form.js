@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function Form() {
+export default function Form(props) {
 
     const classes = useStyles();    
     const [values, setValues] = React.useState({
@@ -47,7 +47,7 @@ export default function Form() {
             "amount":parseInt(values.amount),
             "description":values.description
         }
-        API.addBudgetData('WyK5o0j7z9TrwzaAKMio1moacaZ2',body);
+        API.addBudgetData(props.userId,body);
         setTimeout(function(){
           window.location.reload();
        }, 200)

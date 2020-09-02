@@ -29,8 +29,6 @@ export default function Home() {
 
     const authUser = useContext(UserContext);
 
-
-
     const logout = (e) => {
         e.preventDefault();
         fire.auth().signOut();
@@ -40,46 +38,14 @@ export default function Home() {
         const id = authUser ? authUser.uid : "";
         API.getBudgetData(id).then(response => {
             if(! response.data){ console.log("error")}else{ 
-                setUser({inc_exp: response.data.inc_exp,
-                    savings: response.data.savings
+                setUser({
+                    inc_exp: response.data.inc_exp,
+                    savings: response.data.savings,
+                    userId: id
                 })
             }
         })
     });
-
-
-    const addRecord = (r) =>  {
-        let newRecords = [...user.records, r];
-        setUser({
-            records: newRecords
-        });
-    }
-
-    const deleteRecord = (r) => {
-        const recordIndex = user.records.indexOf(r);
-        const newRecords = user.records.filter((record, index) => index !== recordIndex);
-
-        setUser({
-            records: newRecords
-        });
-    }
-
-    const updateRecord = (oldNew) => {
-        const recordIndex = user.records.indexOf(oldNew.old);
-        let newRecords = user.records.map(
-            (record, index) => {
-                if (index === recordIndex) {
-                    return oldNew.new;
-                } else {
-                    return record;
-                }
-            }
-        );
-
-        setUser({
-            records: newRecords
-        });
-    }
 
     const credits = () => {
 
@@ -113,25 +79,9 @@ export default function Home() {
         return credits() + debits();
     }
 
-    const log = () =>{
-        console.log(authUser);
-    }
-
-
-    const render = () => {
-        const { isLoaded, error, records } = user;
-        let TablePlaceholder;
-        if (error) {
-            TablePlaceholder = <div className="alert alert-danger" role="alert"> Error: {error.message} </div>;
-        } else if (!isLoaded) {
-            TablePlaceholder = <div className="alert alert-primary" role="alert">Loading...</div>;
-        } else {
-            TablePlaceholder = <Table entries={records}
-                handleUpdateRecord={this.updateRecord(this)}
-                handleDeleteRecord={this.deleteRecord(this)} />;
-        }
-    }
-
+    // const log = () =>{
+    //     console.log(user.userId);
+    // }
 
 
         return(
@@ -154,7 +104,8 @@ export default function Home() {
                         <Grid item md={4}>
                             <Grid>
                                 <Grid item>
-                                    <Transaction />
+                                    <Transaction 
+                                    userId = {user.userId}/>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -174,6 +125,7 @@ export default function Home() {
                                     <GoalForm 
                                         goal = {user.savings}
                                         balance = {balance()}
+                                        userId = {user.userId}
                                     />
                                 </Grid>
                             </Grid>

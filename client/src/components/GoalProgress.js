@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 
 export default function GoalProgress(props) {
   const classes = useStyles();
-  const percentage = parseInt(props.saved) / parseInt(props.savings.goal);
+  const percentage = (parseInt(props.saved) / parseInt(props.savings.goal)) * 100;
   // console.log(percentage)
   const [hideButton, setHideButton] = React.useState({showButton: false}); 
 
@@ -34,13 +34,6 @@ export default function GoalProgress(props) {
           {/* <Typography gutterBottom variant="h5" component="h2">
             {`${props.savings.description} : $ ${props.savings.goal}`}
           </Typography> */}
-
-          <GoalText 
-            description = {props.savings.description}
-            savings = {props.savings.goal}
-          />
-          
-          { hideButton.showButton ? <button> updateGoal </button> : <></> }
 
           <CircularProgressbar
             value={percentage}
