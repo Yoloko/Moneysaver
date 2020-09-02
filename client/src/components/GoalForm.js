@@ -11,6 +11,18 @@ import Thermometer from 'react-thermometer-component'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import API from '../utils/API';
+import Alert from './Alert'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+// import Alert from './Alert'
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const useStyles = makeStyles({
   root: {
@@ -24,10 +36,21 @@ const useStyles = makeStyles({
 export default function GoalForm(props) {
   const classes = useStyles();
 
+  const [open, setOpen] = React.useState(false);
+
   const [values, setValues] = React.useState({
     amount: '',
     description: '',
   });
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
 
   const submitForm = () => {
     // alert(`${values.amount} + ${values.description}`)
@@ -36,14 +59,22 @@ export default function GoalForm(props) {
         "saved":props.balance,
         "description":values.description
     }
-    API.updateGoal(props.userId,body);
-    setTimeout(function(){
-      window.location.reload();
-   }, 200)
+    if(values.amount && values.description){
+      API.updateGoal(props.userId,body);
+      setTimeout(function(){
+        window.location.reload();
+     }, 200)
+    }else(
+      handleClickOpen()
+    );
+    
 }
 
   return (
-      <div>
+      <>
+         {/* <Alert
+          open={open}
+        /> */}
     <Card className={classes.root}>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
@@ -67,12 +98,37 @@ export default function GoalForm(props) {
           multiline
         />
 
-        <Button onClick={submitForm}variant="contained" color="primary" disableElevation style={{marginTop: "20px"}}>
+        { values.amount && values.description ? 
+          <Button onClick={submitForm}variant="contained" color="primary" disableElevation style={{marginTop: "20px"}}>
                     Update your Goal
-        </Button>
+        </Button> :
+        <Button onClick={submitForm}variant="contained" color="secondary" disableElevation style={{marginTop: "20px"}}>
+             Update your Goal
+        </Button>   
+        }
         </CardContent>
     </Card>
-      </div>
+    <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle id="alert-dialog-slide-title">{"Use Google's location service?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            You must enter a value for both feilds
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+      </>
    
   );
 }
