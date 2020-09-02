@@ -94,9 +94,17 @@ export default function Home() {
                     <br />
 
                     <div className="row mb-3">
-                        <Summary text="Income" type="success" amount={`$ ${credits()}`} />
-                        <Summary text="Expenses" type="danger" amount={`$ ${debits()}`} />
-                        <Summary text="Saved" type="info" amount={`$ ${balance()}`} />
+                    <Grid container spacing={2}>
+                        <Grid item md={4}>
+                            <Summary text="Income" type="success" amount={`$ ${credits()}`} />
+                        </Grid>
+                        <Grid item md={4}>
+                            <Summary text="Expenses" type="danger" amount={`$ ${debits()}`} />
+                        </Grid>
+                        <Grid item md={4}>
+                            <Summary text="Saved" type="info" amount={`$ ${balance()}`} />
+                        </Grid>
+                    </Grid>
                     </div>
                     <br />
 
