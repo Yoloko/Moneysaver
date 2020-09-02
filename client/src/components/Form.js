@@ -48,7 +48,9 @@ export default function Form() {
             "description":values.description
         }
         API.addBudgetData('WyK5o0j7z9TrwzaAKMio1moacaZ2',body);
-        window.location.reload();
+        setTimeout(function(){
+          window.location.reload();
+       }, 200)
     }
 
 
