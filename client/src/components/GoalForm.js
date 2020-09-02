@@ -8,6 +8,9 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Form from './Form';
 import Thermometer from 'react-thermometer-component'
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import API from '../utils/API';
 
 const useStyles = makeStyles({
   root: {
@@ -21,25 +24,53 @@ const useStyles = makeStyles({
 export default function GoalForm(props) {
   const classes = useStyles();
 
+  const [values, setValues] = React.useState({
+    amount: '',
+    description: '',
+  });
+
+  const submitForm = () => {
+    // alert(`${values.amount} + ${values.description}`)
+    let body = {
+        "goal":parseInt(values.amount),
+        "saved":props.balance,
+        "description":values.description
+    }
+    API.updateGoal('WyK5o0j7z9TrwzaAKMio1moacaZ2',body);
+    setTimeout(function(){
+      window.location.reload();
+   }, 200)
+// console.log(props.goal)
+}
+
   return (
       <div>
     <Card className={classes.root}>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {`Goal : ${''}`}
+            {`Goal : ${props.goal.description}`}
           </Typography>
           <Typography gutterBottom variant="h5" component="h2">
           </Typography>
           <Divider />
-          <Thermometer
-            theme="light"
-            value="300"
-            max="379"
-            steps="3"
-            
-            size="large"
-            height="300"
-            />
+          <TextField
+          id="standard-textarea"
+          label={`${props.goal.description}`}
+          placeholder="Edit Description"
+          onChange={(event) => setValues({...values, description: event.target.value})}
+          multiline
+        />
+        <TextField
+          id="standard-textarea"
+          label={`$ ${props.goal.goal}`}
+          placeholder="Edit Amount"
+          onChange={(event) => setValues({...values, amount: event.target.value})}
+          multiline
+        />
+
+        <Button onClick={submitForm}variant="contained" color="primary" disableElevation style={{marginTop: "20px"}}>
+                    Update your Goal
+        </Button>
         </CardContent>
     </Card>
       </div>

@@ -9,29 +9,39 @@ import Typography from '@material-ui/core/Typography';
 import Form from './Form';
 import Thermometer from 'react-thermometer-component'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import GoalText from './GoalText'
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+    width:'389px'
   },
   media: {
     height: 40,
   },
 });
 
-export default function Goal(props) {
+export default function GoalProgress(props) {
   const classes = useStyles();
+  const percentage = parseInt(props.saved) / parseInt(props.savings.goal);
+  // console.log(percentage)
+  const [hideButton, setHideButton] = React.useState({showButton: false}); 
 
   return (
-      <div>
-    <Card className={classes.root}>
+    <div>
+      <Card className={classes.root}>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {`Goal : ${''}`}
-          </Typography>
-          <Typography gutterBottom variant="h5" component="h2">
-          </Typography>
-          <Divider />
+          {/* <Typography gutterBottom variant="h5" component="h2">
+            {`${props.savings.description} : $ ${props.savings.goal}`}
+          </Typography> */}
+
+          <GoalText 
+            description = {props.savings.description}
+            savings = {props.savings.goal}
+          />
+          
+          { hideButton.showButton ? <button> updateGoal </button> : <></> }
+
           <CircularProgressbar
             value={percentage}
             text={`${percentage}%`}
@@ -48,8 +58,8 @@ export default function Goal(props) {
             })}
           />
         </CardContent>
-    </Card>
-      </div>
-   
+      </Card>
+    </div>
+
   );
 }

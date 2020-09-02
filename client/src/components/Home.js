@@ -5,7 +5,7 @@ import Summary from './Summary';
 import Table from './Table';
 import IncExpTable from './IncExpTable'
 import Transaction from './Transaction'
-import Goal from './Goal'
+import GoalProgress from './GoalProgress'
 import API from '../utils/API';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -161,14 +161,20 @@ export default function Home() {
                         <Grid item md={4}>
                             <Grid>
                                 <Grid item>
-                                    <Goal />
+                                <GoalProgress 
+                                        saved = {balance()}
+                                        savings = {user.savings}
+                                    />
                                 </Grid>
                             </Grid>
                         </Grid>
                         <Grid item md={4}>
                             <Grid>
                                 <Grid item>
-                                    <GoalForm />
+                                    <GoalForm 
+                                        goal = {user.savings}
+                                        balance = {balance()}
+                                    />
                                 </Grid>
                             </Grid>
                         </Grid>
