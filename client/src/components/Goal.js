@@ -8,6 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Form from './Form';
 import Thermometer from 'react-thermometer-component'
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 const useStyles = makeStyles({
   root: {
@@ -31,15 +32,21 @@ export default function Goal(props) {
           <Typography gutterBottom variant="h5" component="h2">
           </Typography>
           <Divider />
-          <Thermometer
-            theme="light"
-            value="300"
-            max="379"
-            steps="3"
-            
-            size="large"
-            height="300"
-            />
+          <CircularProgressbar
+            value={percentage}
+            text={`${percentage}%`}
+            styles={buildStyles({
+              rotation: 0.01,
+              strokeLinecap: 'round',
+              textSize: '1.70em',
+              pathTransitionDuration: 0.5,
+              pathColor: `rgba(62, 152, 199, ${100 / 100})`,
+              textColor: 'rgb(51 66 71)',
+              trailColor: '#d6d6d6',
+              backgroundColor: '#3e98c7',
+              // transform: `translate(${-2}px, ${8}%)`
+            })}
+          />
         </CardContent>
     </Card>
       </div>
