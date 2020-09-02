@@ -118,13 +118,14 @@ const EnhancedTableToolbar = (props) => {
             className={clsx(classes.root, {
                 [classes.highlight]: numSelected > 0,
             })}
+            style={props.selected.length == 0 ?{backgroundColor: "yellow"} : {backgroundColor: "red"} }
         >
             {numSelected > 0 ? (
                 <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
                     {numSelected} selected
                 </Typography>
             ) : (
-                    <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+                    <Typography className={classes.title} variant="h6" id="tableTitle" component="div" style={{backgroundColor: "yellow"}}>
                         Budget Data
                     </Typography>
                 )}
@@ -287,6 +288,7 @@ export default function IncExpTable(props) {
                         aria-labelledby="tableTitle"
                         size={dense ? 'small' : 'medium'}
                         aria-label="enhanced table"
+                        style={{backgroundColor: "yellow"}}
                     >
                         <EnhancedTableHead
                             classes={classes}
