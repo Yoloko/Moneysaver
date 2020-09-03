@@ -4,7 +4,7 @@
 * This web app allows a user to Set a financial goal and track thier expenses as they are saving.
 
 ## View app here and start saving !!
-[Quick Save] (https://money-saver44.herokuapp.com/)
+* <a href="https://money-saver44.herokuapp.com/">Quick Save</a>https://github.com/kevinsqi/react-circular-progressbar
 
 ## Contributing
 * Feel free to create an issue to report bugs!
@@ -16,7 +16,7 @@
  * Express
  
  ## 3rd party code
- <a href="https://codepen.io/mohaiman/pen/MQqMyo" target="_top">Animated Background</a>
- <a href="https://github.com/kevinsqi/react-circular-progressbar" target="_top">Progress Bar</a>
+ * <a href="https://codepen.io/mohaiman/pen/MQqMyo" target="_top">Animated Background</a>
+ * <a href="https://github.com/kevinsqi/react-circular-progressbar" target="_top">Progress Bar</a>
 
 
