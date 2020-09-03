@@ -9,13 +9,13 @@ import CardHeader from '@material-ui/core/CardHeader';
 function Summary(props){
 
     return (
-            <Card style={{backgroundColor: "yellow"}}>
+            <Card style={{backgroundColor: "#f7e9b0"}}>
               <CardContent>
                 <div>
-                  <CardHeader title={props.text} style={{backgroundColor: "red", margin: `${-15}px ${-15}px ${0}px ${-15}px`}}>
+                  <CardHeader title={props.text} style={{backgroundColor: "#1c96d8", margin: `${-15}px ${-15}px ${0}px ${-15}px`}}>
                   </CardHeader>
                 </div>
-                <CardHeader title={props.amount} style={{backgroundColor: "yellow", margin: `${-15}px ${-15}px ${0}px ${-15}px`}}>
+                <CardHeader title={props.amount} style={{backgroundColor: "#f7e9b0", margin: `${-15}px ${-15}px ${0}px ${-15}px`}}>
                   
                 </CardHeader>
               </CardContent>

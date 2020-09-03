@@ -75,7 +75,7 @@ export default function GoalForm(props) {
          {/* <Alert
           open={open}
         /> */}
-    <Card className={classes.root} style={{backgroundColor: "yellow"}}>
+    <Card className={classes.root} style={{backgroundColor: "#f7e9b0"}}>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {`Goal : ${props.goal.description}`}

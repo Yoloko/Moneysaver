@@ -1,6 +1,4 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Page from "../pages/Page";
-import NoMatch from "../pages/NoMatch";
 import Nav from "./Nav";
 import React, { Component, useContext } from 'react'
 import fire from '../config/fire'

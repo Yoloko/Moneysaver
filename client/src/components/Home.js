@@ -94,7 +94,7 @@ export default function Home() {
         // <div style={{backgroundColor: "red"}}>
         <div className="area" >
             <BackgroundCircles />
-            <Button onClick={logout}> Logout</Button>
+            <Button variant="contained" color="secondary" onClick={logout}> Logout</Button>
             <div className="container">
 
                 <h2 style={{ textAlign: "center" }}>Quick Save</h2>
