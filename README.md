@@ -1,7 +1,7 @@
 # Quick Saver MERN app
 
 ## Decription 
-* This web app allows a user to Set a financial goal and track thier expenses as they are saving.
+* This web app allows a user to set a financial goal and track thier expenses as they are saving.
 
 ## View app here and start saving !!
 * <a href="https://money-saver44.herokuapp.com/" target="_top">Quick Save</a>
