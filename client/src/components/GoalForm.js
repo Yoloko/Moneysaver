@@ -69,7 +69,7 @@ export default function GoalForm(props) {
     );
     
 }
-
+console.log(props)
   return (
       <>
          {/* <Alert
@@ -78,7 +78,7 @@ export default function GoalForm(props) {
     <Card className={classes.root} style={{backgroundColor: "#f7e9b0"}}>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {`Goal : ${props.goal.description}`}
+            {props.goal.description == null ? `Goal : Enter a goal below` : `Goal : ${props.goal.description}`}
           </Typography>
           <Typography gutterBottom variant="h5" component="h2">
           </Typography>
