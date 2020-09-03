@@ -26,8 +26,8 @@ import API from '../utils/API';
 import Button from '@material-ui/core/Button';
 
 const headCells = [
-    { id: 'description', numeric: false, disablePadding: true, label: 'Description' },
-    { id: 'amount', numeric: true, disablePadding: false, label: 'Amount' },
+    { id: 'amount', numeric: true, disablePadding: true, label: 'Amount' },
+    { id: 'description', numeric: true, disablePadding: false, label: 'Description' },
     { id: 'timestamp', numeric: true, disablePadding: false, label: 'Timestamp' },
 ];
 
@@ -118,14 +118,14 @@ const EnhancedTableToolbar = (props) => {
             className={clsx(classes.root, {
                 [classes.highlight]: numSelected > 0,
             })}
-            style={props.selected.length == 0 ?{backgroundColor: "yellow"} : {backgroundColor: "red"} }
+            style={props.selected.length == 0 ?{backgroundColor: "#f7e9b0"} : {backgroundColor: "#d05151"} }
         >
             {numSelected > 0 ? (
                 <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
                     {numSelected} selected
                 </Typography>
             ) : (
-                    <Typography className={classes.title} variant="h6" id="tableTitle" component="div" style={{backgroundColor: "yellow"}}>
+                    <Typography className={classes.title} variant="h6" id="tableTitle" component="div" style={{backgroundColor: "#f7e9b0"}}>
                         Budget Data
                     </Typography>
                 )}
@@ -271,7 +271,7 @@ export default function IncExpTable(props) {
 
         let time = new Date('2020-08-28T00:42:13.545Z');
 
-        return( `${mo}-${da}-${ye}` + time.toLocaleTimeString([], {timeStyle: 'short'}))
+        return( `${mo}-${da}-${ye} ` + time.toLocaleTimeString([], {timeStyle: 'short'}))
     }
 
     return (
@@ -288,7 +288,7 @@ export default function IncExpTable(props) {
                         aria-labelledby="tableTitle"
                         size={dense ? 'small' : 'medium'}
                         aria-label="enhanced table"
-                        style={{backgroundColor: "yellow"}}
+                        style={{backgroundColor: "#f7e9b0"}}
                     >
                         <EnhancedTableHead
                             classes={classes}
@@ -314,16 +314,13 @@ export default function IncExpTable(props) {
                                             tabIndex={-1}
                                             key={row._id}
                                             selected={isItemSelected}
-                                            style = { row.amount < 0 ? {backgroundColor: 'red'} : {backgroundColor: 'green'}}
+                                            style = { row.amount < 0 ? {backgroundColor: '#d68383'} : {backgroundColor: '#83d688'}}
                                         >
                                             <TableCell padding="checkbox">
                                                 <Checkbox
                                                 checked={isItemSelected}
                                                 inputProps={{ 'aria-labelledby': labelId }}
                                                 />
-                                            </TableCell>
-                                            <TableCell component="th" id={labelId} scope="row" padding="none">
-                                                {row.timestamp}
                                             </TableCell>
                                             <TableCell align="right">{`$ ${row.amount}`}</TableCell>
                                             <TableCell align="right">{row.description}</TableCell>

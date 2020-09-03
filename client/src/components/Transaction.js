@@ -25,7 +25,7 @@ export default function Transaction(props) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root} style={{backgroundColor: "yellow"}}>
+    <Card className={classes.root} style={{backgroundColor: "#f7e9b0"}}>
         <CardContent>
           <CardHeader title="Make Transaction">
           <Typography gutterBottom variant="h5" component="h2">
