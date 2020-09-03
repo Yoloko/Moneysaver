@@ -16,5 +16,7 @@
  * Express
  
  ## 3rd party code
- * [ Animated Background] https://codepen.io/mohaiman/pen/MQqMyo
- * [Progress Bar] https://github.com/kevinsqi/react-circular-progressbar
+ <a href="https://codepen.io/mohaiman/pen/MQqMyo" target="_top">Animated Background</a>
+ <a href="https://github.com/kevinsqi/react-circular-progressbar" target="_top">Progress Bar</a>
+
+
